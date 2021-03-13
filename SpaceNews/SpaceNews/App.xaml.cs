@@ -1,33 +1,24 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Prism.Ioc;
+using SpaceNews.Keys;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-
 namespace SpaceNews
 {
-    public partial class App : Application
+    public partial class App
     {
-        public App()
+        public App() : base(null) { }
+
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<MainPage>();
+        }
+
+        protected override void OnInitialized()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
-        }
-
-        protected override void OnStart()
-        {
-            // Handle when your app starts
-        }
-
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
-
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
+            NavigationService.NavigateAsync(Pages.MainPage);
         }
     }
 }
