@@ -8,27 +8,22 @@ namespace SpaceNews.Foundation.Http.Policies
 {
     public class NotFoundPolicy : IPolicy
     {
-        
-        public IAsyncPolicy GeneratePolicy()
-        {
-            return Policy.Handle<ApiException>(m => m.StatusCode == HttpStatusCode.NotFound)
+        public IAsyncPolicy GeneratePolicy() =>
+            Policy.Handle<ApiException>(m => m.StatusCode == HttpStatusCode.NotFound)
                 .FallbackAsync((token) =>
                 {
                     Debug.WriteLine("Error: Resource not found on server");
 
                     return Task.CompletedTask;
                 });
-        }     
-        
-        public IAsyncPolicy<TResult> GeneratePolicy<TResult>()
-        {
-            return Policy<TResult>.Handle<ApiException>(m => m.StatusCode == HttpStatusCode.NotFound)
+
+        public IAsyncPolicy<TResult> GeneratePolicy<TResult>() =>
+            Policy<TResult>.Handle<ApiException>(m => m.StatusCode == HttpStatusCode.NotFound)
                 .FallbackAsync((token) =>
                 {
                     Debug.WriteLine("Error: Resource not found on server");
 
                     return Task.FromResult(default(TResult));
                 });
-        }
     }
 }

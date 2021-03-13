@@ -11,7 +11,12 @@ namespace SpaceNews
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            // Navigation Registration
             containerRegistry.RegisterForNavigation<MainPage>();
+
+            // Services
+
+
         }
 
         protected override void OnInitialized()
