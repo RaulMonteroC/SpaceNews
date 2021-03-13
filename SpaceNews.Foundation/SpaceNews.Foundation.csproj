@@ -5,8 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Http" />
       <Folder Include="Services" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SpaceNews.Domain\SpaceNews.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Refit" Version="5.2.4" />
     </ItemGroup>
 
 </Project>
