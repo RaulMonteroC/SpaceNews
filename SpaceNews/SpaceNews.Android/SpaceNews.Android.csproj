@@ -14,7 +14,6 @@
         <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
         <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
         <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-        <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
         <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
         <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     </PropertyGroup>
@@ -71,7 +70,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\SpaceNews\SpaceNews.csproj">
-            <Project>{9F75177F-E1F7-4CDF-94B1-B08F723F81E6}</Project>
+            <Project>{99737828-C686-4355-9942-81FAE6E989AE}</Project>
             <Name>SpaceNews</Name>
         </ProjectReference>
     </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Prism.Ioc;
+using SpaceNews.Foundation.Http;
 using SpaceNews.Keys;
 using Xamarin.Forms.Xaml;
 
@@ -9,9 +10,14 @@ namespace SpaceNews
     {
         public App() : base(null) { }
 
-        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        protected override void RegisterTypes(IContainerRegistry container)
         {
-            containerRegistry.RegisterForNavigation<MainPage>();
+            // Navigation Registration
+            container.RegisterForNavigation<MainPage>();
+
+            // Services
+            container.RegisterSingleton(typeof(IApiService<>), typeof(ApiService<>));
+
         }
 
         protected override void OnInitialized()

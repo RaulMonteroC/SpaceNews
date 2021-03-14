@@ -1,12 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Http" />
-      <Folder Include="Services" />
+      <ProjectReference Include="..\SpaceNews.Domain\SpaceNews.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dawn.Guard" Version="1.12.0" />
+      <PackageReference Include="fusillade" Version="2.3.1" />
+      <PackageReference Include="Polly" Version="7.2.1" />
+      <PackageReference Include="Refit" Version="5.2.4" />
     </ItemGroup>
 
 </Project>
