@@ -16,10 +16,10 @@ namespace SpaceNews.Foundation
         {
             if (disposing)
             {
-                ViewModelSubscriptions?.Dispose();
+                Disposables?.Dispose();
             }
         }
 
-        protected CompositeDisposable ViewModelSubscriptions { get; } = new CompositeDisposable();
+        protected CompositeDisposable Disposables { get; } = new CompositeDisposable();
     }
 }

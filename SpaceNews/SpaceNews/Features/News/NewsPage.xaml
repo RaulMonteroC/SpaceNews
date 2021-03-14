@@ -2,12 +2,48 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SpaceNews.Features.News.NewsPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:news="clr-namespace:SpaceNews.Features.News;assembly=SpaceNews"
+             xmlns:domain="clr-namespace:SpaceNews.Domain;assembly=SpaceNews.Domain"
+             ios:Page.UseSafeArea="True"
+             x:Class="SpaceNews.Features.News.NewsPage"
+             x:DataType="news:NewsViewModel">
+
+    <CollectionView ItemsSource="{Binding Articles}"
+                    Margin="16">
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Grid x:DataType="domain:Article"
+                      RowDefinitions="*, Auto, Auto"
+                      ColumnDefinitions="7*, 3*"
+                      Margin="0, 5">
+
+                        <Label Grid.Row="0" Grid.Column="0"
+                               VerticalOptions="Center"
+                               Text="{Binding Title}"
+                               FontSize="Medium" />
+
+                        <Label Grid.Row="1" Grid.Column="0"
+                               Text="{Binding Summary}"
+                               MaxLines="2"
+                               LineBreakMode="TailTruncation"
+                               FontSize="Micro" />
+
+                        <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="1"
+                               Source="{Binding ImageUrl}"
+                               Aspect="AspectFill"/>
+
+                        <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                 HeightRequest="1" Color="DarkGray" />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToDetailCommand, Source={RelativeSource AncestorType={x:Type news:NewsViewModel}}}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+
+    </CollectionView>
+
 </ContentPage>

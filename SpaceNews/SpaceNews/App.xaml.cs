@@ -16,7 +16,7 @@ namespace SpaceNews
         {
             // Navigation Registration
             container.RegisterForNavigation<MainPage>(Pages.MainPage);
-            container.RegisterForNavigation<NewsPage, NewsViewmodel>(Pages.NewsPage);
+            container.RegisterForNavigation<NewsPage, NewsViewModel>(Pages.NewsPage);
 
             // Services
             container.RegisterSingleton(typeof(IApiService<>), typeof(ApiService<>));
