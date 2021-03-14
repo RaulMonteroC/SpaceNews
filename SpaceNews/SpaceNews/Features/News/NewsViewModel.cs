@@ -20,31 +20,30 @@ namespace SpaceNews.Features.News
     public sealed class NewsViewModel : BaseViewModel
     {
         public NewsViewModel(IArticleService articleService,
-            INavigationService navigationService)
+                             INavigationService navigationService)
         {
             _articleService = Guard.Argument(articleService, nameof(articleService))
-                .NotNull()
-                .Value;
+                                   .NotNull()
+                                   .Value;
 
             _navigationService = Guard.Argument(navigationService, nameof(navigationService))
-                .NotNull()
-                .Value;
+                                      .NotNull()
+                                      .Value;
 
             ArticlesSourceCache.Connect()
-                .Bind(out _articles)
-                .DisposeMany()
-                .Subscribe();
+                               .Bind(out _articles)
+                               .DisposeMany()
+                               .Subscribe();
 
             LoadArticlesCommand = ReactiveCommand.CreateFromTask(ExecuteLoadArticles);
             NavigateToDetailCommand = ReactiveCommand.CreateFromTask(ExecuteNavigateToDetail);
 
             LoadArticlesCommand.Execute()
-                .Subscribe()
-                .DisposeWith(Disposables);
+                               .Subscribe()
+                               .DisposeWith(Disposables);
 
-            LoadArticlesCommand
-                .Subscribe(articles => ArticlesSourceCache.AddOrUpdate(articles))
-                .DisposeWith(Disposables);
+            LoadArticlesCommand.Subscribe(articles => ArticlesSourceCache.AddOrUpdate(articles))
+                               .DisposeWith(Disposables);
         }
 
         public SourceCache<Article, string> ArticlesSourceCache { get; } = new SourceCache<Article, string>(x => x.Id);

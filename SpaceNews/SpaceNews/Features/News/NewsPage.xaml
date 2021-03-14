@@ -11,21 +11,21 @@
 
     <NavigationPage.TitleView>
         <Label Text="Space News"
-               Margin="5,0"
+               Margin="{StaticResource MicroThickness}"
                FontSize="Title" />
     </NavigationPage.TitleView>
 
     <CollectionView ItemsSource="{Binding Articles}"
                     RemainingItemsThresholdReachedCommand="{Binding LoadArticlesCommand}"
                     RemainingItemsThreshold="2"
-                    Margin="16">
+                    Margin="{StaticResource MediumThickness}">
 
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid x:DataType="domain:Article"
                       RowDefinitions="*, Auto, Auto"
                       ColumnDefinitions="7*, 3*"
-                      Margin="0, 5">
+                      Margin="{StaticResource MicroThickness}">
 
                         <Label Grid.Row="0" Grid.Column="0"
                                VerticalOptions="Center"
