@@ -5,7 +5,7 @@ using Polly;
 
 namespace SpaceNews.Foundation.Http.Policies
 {
-    public class RetryPolicy : IPolicy
+    internal class RetryPolicy : IPolicy
     {
         public IAsyncPolicy GeneratePolicy() =>
             Policy.Handle<ApiException>().WaitAndRetryAsync(

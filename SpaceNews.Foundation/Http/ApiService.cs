@@ -9,7 +9,7 @@ using Refit;
 
 namespace SpaceNews.Foundation.Http
 {
-    public class ApiService<TApi> : IApiService<TApi>
+    public sealed class ApiService<TApi> : IApiService<TApi>
     {
         public ApiService() => _policyBuilder = new PolicyBuilder();
 

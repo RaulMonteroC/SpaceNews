@@ -2,7 +2,7 @@ using Polly;
 
 namespace SpaceNews.Foundation.Http.Policies
 {
-    public class PolicyBuilder
+    internal sealed class PolicyBuilder
     {
         public PolicyBuilder()
         {

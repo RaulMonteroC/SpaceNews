@@ -6,7 +6,7 @@ using Polly;
 
 namespace SpaceNews.Foundation.Http.Policies
 {
-    public class NotFoundPolicy : IPolicy
+    internal sealed class NotFoundPolicy : IPolicy
     {
         public IAsyncPolicy GeneratePolicy() =>
             Policy.Handle<ApiException>(exception => exception.StatusCode == HttpStatusCode.NotFound)

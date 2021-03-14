@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SpaceNews.Foundation.Http
 {
-    internal class LoggedHttpClientHandler : HttpClientHandler
+    internal sealed class LoggedHttpClientHandler : HttpClientHandler
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
