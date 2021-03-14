@@ -16,6 +16,8 @@
     </NavigationPage.TitleView>
 
     <CollectionView ItemsSource="{Binding Articles}"
+                    RemainingItemsThresholdReachedCommand="{Binding LoadArticlesCommand}"
+                    RemainingItemsThreshold="2"
                     Margin="16">
 
         <CollectionView.ItemTemplate>

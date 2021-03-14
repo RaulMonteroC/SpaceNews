@@ -16,7 +16,7 @@ namespace SpaceNews.Foundation.Services
                                .Value;
         }
 
-        public Task<IEnumerable<Article>> GetArticles() => _apiService.Call(api => api.GetArticles());
+        public Task<IEnumerable<Article>> GetArticles(int start, int limit) => _apiService.Call(api => api.GetArticles(start, limit));
 
         private readonly IApiService<ISpaceFlightApi> _apiService;
     }

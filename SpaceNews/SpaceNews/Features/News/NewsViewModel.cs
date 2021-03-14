@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Dawn;
 using DynamicData;
@@ -36,9 +39,12 @@ namespace SpaceNews.Features.News
             NavigateToDetailCommand = ReactiveCommand.CreateFromTask(ExecuteNavigateToDetail);
 
             LoadArticlesCommand.Execute()
-                .Subscribe(articles => ArticlesSourceCache.AddOrUpdate(articles))
+                .Subscribe()
                 .DisposeWith(Disposables);
 
+            LoadArticlesCommand
+                .Subscribe(articles => ArticlesSourceCache.AddOrUpdate(articles))
+                .DisposeWith(Disposables);
         }
 
         public SourceCache<Article, string> ArticlesSourceCache { get; } = new SourceCache<Article, string>(x => x.Id);
@@ -47,11 +53,13 @@ namespace SpaceNews.Features.News
         public ReactiveCommand<Unit, IEnumerable<Article>> LoadArticlesCommand { get; }
         public ReactiveCommand <Unit, Unit> NavigateToDetailCommand { get; }
 
-        private Task<IEnumerable<Article>> ExecuteLoadArticles() => _articleService.GetArticles();
+        private Task<IEnumerable<Article>> ExecuteLoadArticles() => _articleService.GetArticles(Articles.Count,NumberOfArticlesPerFetch);
         private Task ExecuteNavigateToDetail() => _navigationService.NavigateAsync(Pages.MainPage);
+
 
         private readonly ReadOnlyObservableCollection<Article> _articles;
         private readonly IArticleService _articleService;
         private readonly INavigationService _navigationService;
+        private const int NumberOfArticlesPerFetch = 10;
     }
 }

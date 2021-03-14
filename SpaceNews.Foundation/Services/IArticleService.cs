@@ -6,6 +6,6 @@ namespace SpaceNews.Foundation.Services
 {
     public interface IArticleService
     {
-        Task<IEnumerable<Article>> GetArticles();
+        Task<IEnumerable<Article>> GetArticles(int start, int limit);
     }
 }

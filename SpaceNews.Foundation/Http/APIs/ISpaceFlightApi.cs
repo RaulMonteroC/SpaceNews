@@ -11,7 +11,7 @@ namespace SpaceNews.Foundation.Http.APIs
     [Headers("Accept: application/json")]
     public interface ISpaceFlightApi
     {
-        [Get("/articles?_limit={limit}")]
-        Task<IEnumerable<Article>> GetArticles(int limit=10);
+        [Get("/articles?_start={start}&&_limit={limit}")]
+        Task<IEnumerable<Article>> GetArticles(int start, int limit);
     }
 }
