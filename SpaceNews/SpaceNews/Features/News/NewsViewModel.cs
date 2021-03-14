@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
+using Dawn;
 using DynamicData;
 using Prism.Navigation;
 using ReactiveUI;
@@ -18,8 +19,13 @@ namespace SpaceNews.Features.News
         public NewsViewModel(IArticleService articleService,
             INavigationService navigationService)
         {
-            _articleService = articleService;
-            _navigationService = navigationService;
+            _articleService = Guard.Argument(articleService, nameof(articleService))
+                .NotNull()
+                .Value;
+
+            _navigationService = Guard.Argument(navigationService, nameof(navigationService))
+                .NotNull()
+                .Value;
 
             ArticlesSourceCache.Connect()
                 .Bind(out _articles)

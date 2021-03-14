@@ -9,6 +9,12 @@
              x:Class="SpaceNews.Features.News.NewsPage"
              x:DataType="news:NewsViewModel">
 
+    <NavigationPage.TitleView>
+        <Label Text="Space News"
+               Margin="5,0"
+               FontSize="Title" />
+    </NavigationPage.TitleView>
+
     <CollectionView ItemsSource="{Binding Articles}"
                     Margin="16">
 

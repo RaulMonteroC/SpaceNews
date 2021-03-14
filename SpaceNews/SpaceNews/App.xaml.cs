@@ -12,9 +12,17 @@ namespace SpaceNews
     {
         public App() : base(null) { }
 
+        protected override void OnInitialized()
+        {
+            InitializeComponent();
+
+            NavigationService.NavigateAsync($"{Pages.DefaultNavigationPage}/{Pages.NewsPage}");
+        }
+
         protected override void RegisterTypes(IContainerRegistry container)
         {
             // Navigation Registration
+            container.RegisterForNavigation<DefaultNavigationPage>(Pages.DefaultNavigationPage);
             container.RegisterForNavigation<MainPage>(Pages.MainPage);
             container.RegisterForNavigation<NewsPage, NewsViewModel>(Pages.NewsPage);
 
@@ -22,13 +30,6 @@ namespace SpaceNews
             container.RegisterSingleton(typeof(IApiService<>), typeof(ApiService<>));
             container.Register<IArticleService, ArticleService>();
 
-        }
-
-        protected override void OnInitialized()
-        {
-            InitializeComponent();
-
-            NavigationService.NavigateAsync(Pages.NewsPage);
         }
     }
 }

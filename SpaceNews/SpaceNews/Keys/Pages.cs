@@ -2,7 +2,8 @@ namespace SpaceNews.Keys
 {
     public static class Pages
     {
-        public static string MainPage => nameof(MainPage);
-        public static string NewsPage => nameof(NewsPage);
+        public const string DefaultNavigationPage = nameof(DefaultNavigationPage);
+        public const string MainPage = nameof(MainPage);
+        public const string NewsPage = nameof(NewsPage);
     }
 }
