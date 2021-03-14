@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Dawn;
 using DynamicData;
@@ -44,8 +41,12 @@ namespace SpaceNews.Features.News
 
             LoadArticlesCommand.Subscribe(articles => ArticlesSourceCache.AddOrUpdate(articles))
                                .DisposeWith(Disposables);
+
+            LoadArticlesCommand.IsExecuting.ToProperty(this, nameof(IsBusy), out _isBusy)
+                                           .DisposeWith(Disposables);
         }
 
+        public bool IsBusy => _isBusy.Value;
         public SourceCache<Article, string> ArticlesSourceCache { get; } = new SourceCache<Article, string>(x => x.Id);
         public ReadOnlyObservableCollection<Article> Articles => _articles;
 
@@ -55,10 +56,10 @@ namespace SpaceNews.Features.News
         private Task<IEnumerable<Article>> ExecuteLoadArticles() => _articleService.GetArticles(Articles.Count,NumberOfArticlesPerFetch);
         private Task ExecuteNavigateToDetail() => _navigationService.NavigateAsync(Pages.MainPage);
 
-
+        private const int NumberOfArticlesPerFetch = 10;
         private readonly ReadOnlyObservableCollection<Article> _articles;
         private readonly IArticleService _articleService;
         private readonly INavigationService _navigationService;
-        private const int NumberOfArticlesPerFetch = 10;
+        private readonly ObservableAsPropertyHelper<bool> _isBusy;
     }
 }

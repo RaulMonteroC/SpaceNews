@@ -15,17 +15,19 @@
                FontSize="Title" />
     </NavigationPage.TitleView>
 
-    <CollectionView ItemsSource="{Binding Articles}"
-                    RemainingItemsThresholdReachedCommand="{Binding LoadArticlesCommand}"
-                    RemainingItemsThreshold="2"
-                    Margin="{StaticResource MediumThickness}">
+    <StackLayout>
 
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Grid x:DataType="domain:Article"
-                      RowDefinitions="*, Auto, Auto"
-                      ColumnDefinitions="7*, 3*"
-                      Margin="{StaticResource MicroThickness}">
+        <CollectionView ItemsSource="{Binding Articles}"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadArticlesCommand}"
+                        RemainingItemsThreshold="2"
+                        Margin="{StaticResource MediumThickness}">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:DataType="domain:Article"
+                          RowDefinitions="*, Auto, Auto"
+                          ColumnDefinitions="7*, 3*"
+                          Margin="{StaticResource MicroThickness}">
 
                         <Label Grid.Row="0" Grid.Column="0"
                                VerticalOptions="Center"
@@ -40,18 +42,22 @@
 
                         <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="1"
                                Source="{Binding ImageUrl}"
-                               Aspect="AspectFill"/>
+                               Aspect="AspectFill" />
 
                         <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                                  HeightRequest="1" Color="DarkGray" />
 
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigateToDetailCommand, Source={RelativeSource AncestorType={x:Type news:NewsViewModel}}}"/>
+                            <TapGestureRecognizer
+                                Command="{Binding NavigateToDetailCommand, Source={RelativeSource AncestorType={x:Type news:NewsViewModel}}}" />
                         </Grid.GestureRecognizers>
                     </Grid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
 
-    </CollectionView>
+        </CollectionView>
 
+        <ActivityIndicator HorizontalOptions="CenterAndExpand"
+                           IsRunning="{Binding IsBusy, Source={RelativeSource AncestorType={x:Type news:NewsViewModel}}}" />
+    </StackLayout>
 </ContentPage>
