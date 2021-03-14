@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Dawn;
 using DynamicData;
@@ -32,25 +34,34 @@ namespace SpaceNews.Features.News
                                .DisposeMany()
                                .Subscribe();
 
-            LoadArticlesCommand = ReactiveCommand.CreateFromTask(ExecuteLoadArticles);
             NavigateToDetailCommand = ReactiveCommand.CreateFromTask(ExecuteNavigateToDetail);
+            LoadArticlesCommand = ReactiveCommand.CreateFromTask(ExecuteLoadArticles);
+            FetchMoreArticlesCommand = ReactiveCommand.CreateFromTask(ExecuteLoadArticles);
 
             LoadArticlesCommand.Execute()
-                               .Subscribe()
-                               .DisposeWith(Disposables);
+                .Subscribe()
+                .DisposeWith(Disposables);
 
             LoadArticlesCommand.Subscribe(articles => ArticlesSourceCache.AddOrUpdate(articles))
                                .DisposeWith(Disposables);
 
             LoadArticlesCommand.IsExecuting.ToProperty(this, nameof(IsBusy), out _isBusy)
                                            .DisposeWith(Disposables);
+
+            FetchMoreArticlesCommand.Subscribe(articles => ArticlesSourceCache.AddOrUpdate(articles))
+                                    .DisposeWith(Disposables);
+
+            FetchMoreArticlesCommand.IsExecuting.ToProperty(this, nameof(IsLoadingMoreArticles), out _isLoadingMoreArticles)
+                                                .DisposeWith(Disposables);
         }
 
         public bool IsBusy => _isBusy.Value;
+        public bool IsLoadingMoreArticles => _isLoadingMoreArticles.Value;
         public SourceCache<Article, string> ArticlesSourceCache { get; } = new SourceCache<Article, string>(x => x.Id);
         public ReadOnlyObservableCollection<Article> Articles => _articles;
 
         public ReactiveCommand<Unit, IEnumerable<Article>> LoadArticlesCommand { get; }
+        public ReactiveCommand<Unit, IEnumerable<Article>> FetchMoreArticlesCommand { get; }
         public ReactiveCommand <Unit, Unit> NavigateToDetailCommand { get; }
 
         private Task<IEnumerable<Article>> ExecuteLoadArticles() => _articleService.GetArticles(Articles.Count,NumberOfArticlesPerFetch);
@@ -61,5 +72,6 @@ namespace SpaceNews.Features.News
         private readonly IArticleService _articleService;
         private readonly INavigationService _navigationService;
         private readonly ObservableAsPropertyHelper<bool> _isBusy;
+        private readonly ObservableAsPropertyHelper<bool> _isLoadingMoreArticles;
     }
 }
