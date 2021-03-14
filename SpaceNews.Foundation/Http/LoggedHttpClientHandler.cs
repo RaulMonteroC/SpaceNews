@@ -11,8 +11,7 @@ namespace SpaceNews.Foundation.Http
 {
     internal class LoggedHttpClientHandler : HttpClientHandler
     {
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-            CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             await Task.Delay(1, cancellationToken).ConfigureAwait(false);
             var start = DateTime.Now;
@@ -84,8 +83,6 @@ namespace SpaceNews.Foundation.Http
             return response;
         }
 
-        readonly string[] types = { "html", "text", "xml", "json", "txt", "x-www-form-urlencoded" };
-
         private bool IsTextBasedContentType(HttpHeaders headers)
         {
             IEnumerable<string> values;
@@ -93,7 +90,9 @@ namespace SpaceNews.Foundation.Http
                 return false;
             var header = string.Join(" ", values).ToLowerInvariant();
 
-            return types.Any(t => header.Contains(t));
+            return _types.Any(t => header.Contains(t));
         }
+
+        private readonly string[] _types = { "html", "text", "xml", "json", "txt", "x-www-form-urlencoded" };
     }
 }

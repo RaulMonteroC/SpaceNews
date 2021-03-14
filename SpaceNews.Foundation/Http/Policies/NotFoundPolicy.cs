@@ -9,8 +9,8 @@ namespace SpaceNews.Foundation.Http.Policies
     public class NotFoundPolicy : IPolicy
     {
         public IAsyncPolicy GeneratePolicy() =>
-            Policy.Handle<ApiException>(m => m.StatusCode == HttpStatusCode.NotFound)
-                .FallbackAsync((token) =>
+            Policy.Handle<ApiException>(exception => exception.StatusCode == HttpStatusCode.NotFound)
+                .FallbackAsync(token =>
                 {
                     Debug.WriteLine("Error: Resource not found on server");
 
@@ -18,8 +18,8 @@ namespace SpaceNews.Foundation.Http.Policies
                 });
 
         public IAsyncPolicy<TResult> GeneratePolicy<TResult>() =>
-            Policy<TResult>.Handle<ApiException>(m => m.StatusCode == HttpStatusCode.NotFound)
-                .FallbackAsync((token) =>
+            Policy<TResult>.Handle<ApiException>(exception => exception.StatusCode == HttpStatusCode.NotFound)
+                .FallbackAsync(token =>
                 {
                     Debug.WriteLine("Error: Resource not found on server");
 
