@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Refit;
 using SpaceNews.Domain;
 using SpaceNews.Foundation.Attributes;
@@ -11,6 +12,6 @@ namespace SpaceNews.Foundation.Http.APIs
     public interface ISpaceFlightApi
     {
         [Get("/articles?_limit={limit}")]
-        IEnumerable<Article> GetArticles(int limit=10);
+        Task<IEnumerable<Article>> GetArticles(int limit=10);
     }
 }

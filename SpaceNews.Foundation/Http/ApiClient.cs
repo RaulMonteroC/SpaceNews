@@ -15,11 +15,11 @@ namespace SpaceNews.Foundation.Http
 
         public Task Call(Func<TApi, Task> apiCall) =>
             _policyBuilder.Build()
-                          .ExecuteAsync(async () => await apiCall(LoadApiDefinition()));
+                          .ExecuteAsync( () => apiCall(LoadApiDefinition()));
 
         public Task<TResult> Call<TResult>(Func<TApi, Task<TResult>> apiCall) =>
             _policyBuilder.Build<TResult>()
-                          .ExecuteAsync(async () => await apiCall(LoadApiDefinition()));
+                          .ExecuteAsync(() => apiCall(LoadApiDefinition()));
 
         private static TApi LoadApiDefinition() =>
             RestService.For<TApi>(
