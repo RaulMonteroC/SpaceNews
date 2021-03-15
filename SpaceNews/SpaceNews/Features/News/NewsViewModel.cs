@@ -37,20 +37,22 @@ namespace SpaceNews.Features.News
             FetchMoreArticlesCommand = ReactiveCommand.CreateFromTask(ExecuteLoadArticles);
 
             LoadArticlesCommand.Execute()
-                .Subscribe()
-                .DisposeWith(Disposables);
+                               .Subscribe()
+                               .DisposeWith(Disposables);
 
             LoadArticlesCommand.Subscribe(articles => ArticlesSourceCache.AddOrUpdate(articles))
                                .DisposeWith(Disposables);
 
-            LoadArticlesCommand.IsExecuting.ToProperty(this, nameof(IsBusy), out _isBusy)
-                                           .DisposeWith(Disposables);
+            LoadArticlesCommand.IsExecuting
+                               .ToProperty(this, nameof(IsBusy), out _isBusy)
+                               .DisposeWith(Disposables);
 
             FetchMoreArticlesCommand.Subscribe(articles => ArticlesSourceCache.AddOrUpdate(articles))
                                     .DisposeWith(Disposables);
 
-            FetchMoreArticlesCommand.IsExecuting.ToProperty(this, nameof(IsLoadingMoreArticles), out _isLoadingMoreArticles)
-                                                .DisposeWith(Disposables);
+            FetchMoreArticlesCommand.IsExecuting
+                                    .ToProperty(this, nameof(IsLoadingMoreArticles), out _isLoadingMoreArticles)
+                                    .DisposeWith(Disposables);
         }
 
         public bool IsBusy => _isBusy.Value;
