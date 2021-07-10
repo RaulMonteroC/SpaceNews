@@ -1,5 +1,7 @@
 ﻿using Prism.Ioc;
+using SpaceNews.Features.News;
 using SpaceNews.Foundation.Http;
+using SpaceNews.Foundation.Services;
 using SpaceNews.Keys;
 using Xamarin.Forms.Xaml;
 
@@ -10,21 +12,24 @@ namespace SpaceNews
     {
         public App() : base(null) { }
 
-        protected override void RegisterTypes(IContainerRegistry container)
-        {
-            // Navigation Registration
-            container.RegisterForNavigation<MainPage>();
-
-            // Services
-            container.RegisterSingleton(typeof(IApiService<>), typeof(ApiService<>));
-
-        }
-
         protected override void OnInitialized()
         {
             InitializeComponent();
 
-            NavigationService.NavigateAsync(Pages.MainPage);
+            NavigationService.NavigateAsync($"{Pages.DefaultNavigationPage}/{Pages.NewsPage}");
+        }
+
+        protected override void RegisterTypes(IContainerRegistry container)
+        {
+            // Navigation Registration
+            container.RegisterForNavigation<DefaultNavigationPage>(Pages.DefaultNavigationPage);
+            container.RegisterForNavigation<MainPage>(Pages.MainPage);
+            container.RegisterForNavigation<NewsPage, NewsViewModel>(Pages.NewsPage);
+
+            // Services
+            container.RegisterSingleton(typeof(IApiService<>), typeof(ApiService<>));
+            container.Register<IArticleService, ArticleService>();
+
         }
     }
 }
